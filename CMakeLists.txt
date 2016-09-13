@@ -22,7 +22,11 @@ set (OBSERVER_SOURCES
     ${PROJECT_SOURCE_DIR}/sf_event.cpp
     )
 
-add_library(observer ${OBSERVER_SOURCES})
+if(STATIC_BUILD)
+		add_library(observer STATIC ${OBSERVER_SOURCES})
+else()
+		add_library(observer SHARED ${OBSERVER_SOURCES})
+endif()
 
 # Needed for add_subdirectory() in parent projects
 target_include_directories(observer PUBLIC ${PROJECT_SOURCE_DIR})
