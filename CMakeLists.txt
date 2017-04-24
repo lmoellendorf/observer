@@ -72,6 +72,12 @@ install(TARGETS observer
 		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
+write_basic_package_version_file(
+	${PROJECT_VERSION_FILE}
+	VERSION ${${PROJECT_NAME}_VERSION}
+	COMPATIBILITY AnyNewerVersion
+)
+
 install(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sfobserver)
 install(EXPORT libobserver-config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libobserver)
 export(TARGETS observer FILE libobserver-config.cmake)
