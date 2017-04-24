@@ -62,6 +62,10 @@ target_include_directories(observer INTERFACE
 #---------------------------------------------------------------------------------------
 # install targets
 #---------------------------------------------------------------------------------------
+set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
+set(PROJECT_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
+set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
+
 install(TARGETS observer
 		EXPORT libobserver-config
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
