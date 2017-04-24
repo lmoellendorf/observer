@@ -27,7 +27,7 @@ SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE           "alpha"         CACHE STRING 
 SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE_VERSION   4               CACHE STRING "version type version")
 SET(${PROJECT_NAME}_PRODUCT_COMPANY                "STACKFORCE"    CACHE STRING "company name")
 SET(${PROJECT_NAME}_PRODUCT_NAME                   "OBSERVER"          CACHE STRING "product name")
-SET(${PROJECT_NAME}_VERSION_STRING ${LISA_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
+SET(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fmessage-length=0")
 
 
@@ -48,7 +48,7 @@ set(${PROJECT_NAME}_HEADERS
 # libobserver target
 #---------------------------------------------------------------------------------------
 add_library(observer ${${PROJECT_NAME}_SOURCES})
-set_target_properties(observer PROPERTIES VERSION ${${PROJECT_NAME}_VERSION_STRING})
+set_target_properties(observer PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
 
 #---------------------------------------------------------------------------------------
 # libobserver includes
