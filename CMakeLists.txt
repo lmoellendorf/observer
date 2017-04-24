@@ -12,33 +12,34 @@
 ## @author     STACKFORCE
 ## @brief      Generic implementation of the Oberserver pattern.
 ##
-cmake_minimum_required (VERSION 2.8)
-project (observer)
+cmake_minimum_required(VERSION 3.2)
+project(observer)
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 #---------------------------------------------------------------------------------------
 # OBSERVER VERSION
 #---------------------------------------------------------------------------------------
-SET(LISA_VERSION_MAJOR                  1               CACHE STRING "mayor version")
-SET(OBSERVER_VERSION_MINOR                  0               CACHE STRING "minor version")
-SET(OBSERVER_VERSION_PATCH                  0               CACHE STRING "patch version")
-SET(OBSERVER_VERSION_RELEASE_TYPE           "alpha"         CACHE STRING "version type")
-SET(OBSERVER_VERSION_RELEASE_TYPE_VERSION   4               CACHE STRING "version type version")
-SET(OBSERVER_PRODUCT_COMPANY                "STACKFORCE"    CACHE STRING "company name")
-SET(OBSERVER_PRODUCT_NAME                   "OBSERVER"          CACHE STRING "product name")
-SET(OBSERVER_VERSION_STRING ${LISA_VERSION_MAJOR}.${OBSERVER_VERSION_MINOR}.${OBSERVER_VERSION_PATCH})
+SET(${PROJECT_NAME}_VERSION_MAJOR                  1               CACHE STRING "mayor version")
+SET(${PROJECT_NAME}_VERSION_MINOR                  0               CACHE STRING "minor version")
+SET(${PROJECT_NAME}_VERSION_PATCH                  0               CACHE STRING "patch version")
+SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE           "alpha"         CACHE STRING "version type")
+SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE_VERSION   4               CACHE STRING "version type version")
+SET(${PROJECT_NAME}_PRODUCT_COMPANY                "STACKFORCE"    CACHE STRING "company name")
+SET(${PROJECT_NAME}_PRODUCT_NAME                   "OBSERVER"          CACHE STRING "product name")
+SET(${PROJECT_NAME}_VERSION_STRING ${LISA_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fmessage-length=0")
 
 
 #---------------------------------------------------------------------------------------
 # libobserver sources and headers
 #---------------------------------------------------------------------------------------
-set(OBSERVER_SOURCES
+set(${PROJECT_NAME}_SOURCES
     ${PROJECT_SOURCE_DIR}/sf_subject.cpp
     ${PROJECT_SOURCE_DIR}/sf_event.cpp
 )
 
-set(OBSERVER_HEADERS
+set(${PROJECT_NAME}_HEADERS
 	${PROJECT_SOURCE_DIR}/sf_observer.h
 	${PROJECT_SOURCE_DIR}/sf_subject.h
 )
@@ -46,8 +47,8 @@ set(OBSERVER_HEADERS
 #---------------------------------------------------------------------------------------
 # libobserver target
 #---------------------------------------------------------------------------------------
-add_library(observer ${OBSERVER_SOURCES})
-set_target_properties(observer PROPERTIES VERSION ${OBSERVER_VERSION_STRING})
+add_library(observer ${${PROJECT_NAME}_SOURCES})
+set_target_properties(observer PROPERTIES VERSION ${${PROJECT_NAME}_VERSION_STRING})
 
 #---------------------------------------------------------------------------------------
 # libobserver includes
@@ -66,7 +67,7 @@ install(TARGETS observer
 		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-install(FILES ${OBSERVER_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sfobserver)
+install(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sfobserver)
 install(EXPORT libobserver-config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libobserver)
 export(TARGETS observer FILE libobserver-config.cmake)
 export(PACKAGE libobserver)
