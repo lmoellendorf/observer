@@ -42,6 +42,7 @@ set(${PROJECT_NAME}_SOURCES
 set(${PROJECT_NAME}_HEADERS
 	${PROJECT_SOURCE_DIR}/sf_observer.h
 	${PROJECT_SOURCE_DIR}/sf_subject.h
+	${PROJECT_SOURCE_DIR}/sf_event.h
 )
 
 #---------------------------------------------------------------------------------------
