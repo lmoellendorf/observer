@@ -45,14 +45,22 @@ void Subject::Detach ( Observer *observer )
   Subject::observers.remove ( observer );
 }
 
-void Subject::Notify ( Event *event, Filter filter )
+// void Subject::Notify ( Event *event, Filter filter )
+// {
+//   for ( auto it = observers.begin(); it != observers.end(); ++it )
+//     {
+//       if ( filter ( ( Observer* ) *it, event ) )
+//         {
+//           ( ( Observer* ) *it )->Update ( event );
+//         }
+//     }
+// }
+
+void Subject::Notify ( Event *event)
 {
   for ( auto it = observers.begin(); it != observers.end(); ++it )
     {
-      if ( filter ( ( Observer* ) *it, event ) )
-        {
           ( ( Observer* ) *it )->Update ( event );
-        }
     }
 }
 
