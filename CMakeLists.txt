@@ -12,6 +12,7 @@
 ## @author     STACKFORCE
 ## @brief      Generic implementation of the Oberserver pattern.
 ##
+
 cmake_minimum_required(VERSION 3.2)
 project(observer)
 include(GNUInstallDirs)
@@ -60,7 +61,7 @@ target_include_directories(observer INTERFACE
 )
 
 #---------------------------------------------------------------------------------------
-# install targets
+# install/export targets
 #---------------------------------------------------------------------------------------
 set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 set(PROJECT_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
@@ -79,6 +80,20 @@ write_basic_package_version_file(
 )
 
 install(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sfobserver)
-install(EXPORT libobserver-config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/libobserver)
-export(TARGETS observer FILE libobserver-config.cmake)
-export(PACKAGE libobserver)
+install(FILES ${PROJECT_VERSION_FILE}
+		DESTINATION ${CONFIG_INSTALL_DIR}
+)
+
+# build directory package config
+export(EXPORT ${TARGETS_EXPORT_NAME}
+		FILE ${PROJECT_NAME}-config.cmake
+)
+
+# installed package config
+install(EXPORT ${PROJECT_NAME}Targets
+		DESTINATION ${CONFIG_INSTALL_DIR}
+		FILE ${PROJECT_NAME}-config.cmake
+)
+
+# add to CMake registry
+export(PACKAGE ${PROJECT_NAME})
