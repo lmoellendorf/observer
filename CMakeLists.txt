@@ -54,25 +54,25 @@ add_library(observer_o OBJECT ${${PROJECT_NAME}_SOURCES})
 set_target_properties(observer_o PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
 # add static and shared libs targets
-add_library(observer_dynamic SHARED $<TARGET_OBJECTS:observer_o>)
-add_library(observer_static STATIC $<TARGET_OBJECTS:observer_o>)
+add_library(observer SHARED $<TARGET_OBJECTS:observer_o>)
+add_library(observer-static STATIC $<TARGET_OBJECTS:observer_o>)
 
 # ensure produced static and shared libs have the same name
-set_target_properties(observer_dynamic PROPERTIES OUTPUT_NAME observer)
-set_target_properties(observer_static PROPERTIES OUTPUT_NAME observer)
+set_target_properties(observer PROPERTIES OUTPUT_NAME observer)
+set_target_properties(observer-static PROPERTIES OUTPUT_NAME observer)
 
-set_target_properties(observer_dynamic PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
-set_target_properties(observer_static PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
+set_target_properties(observer PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
+set_target_properties(observer-static PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
 
 #---------------------------------------------------------------------------------------
 # libobserver includes
 #---------------------------------------------------------------------------------------
-target_include_directories(observer_dynamic INTERFACE
+target_include_directories(observer INTERFACE
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
 )
 
-target_include_directories(observer_static INTERFACE
+target_include_directories(observer-static INTERFACE
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
 )
@@ -84,7 +84,7 @@ set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 set(PROJECT_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
 set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 
-install(TARGETS observer_dynamic observer_static
+install(TARGETS observer observer-static
 		EXPORT ${TARGETS_EXPORT_NAME}
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
