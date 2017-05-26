@@ -93,7 +93,7 @@ install(TARGETS observer observer-static
 write_basic_package_version_file(
 	${PROJECT_VERSION_FILE}
 	VERSION ${${PROJECT_NAME}_VERSION}
-	COMPATIBILITY AnyNewerVersion
+	COMPATIBILITY SameMajorVersion
 )
 
 install(FILES ${${PROJECT_NAME}_HEADERS}
