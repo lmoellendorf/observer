@@ -119,51 +119,39 @@ install(EXPORT ${PROJECT_NAME}Targets
 export(PACKAGE ${PROJECT_NAME})
 
 #---------------------------------------------------------------------------------------
-# CREATE DEB PACKAGE
+# Create release packages
 #---------------------------------------------------------------------------------------
-set(CPACK_GENERATOR "DEB")
+# package release version
+set(PACKAGE_RELEASE_VERSION 1)
 
-# check if command dpkg is available
-find_program(DPKG_CMD dpkg)
-if(DPKG_CMD)
-	message(STATUS "DEB Generator: Found dpkg: ${DPKG_CMD}")
-else()
-	message(WARNING "DEB Generator: dpkg not found")
+# determine distribution and architecture
+execute_process(COMMAND lsb_release -si OUTPUT_VARIABLE LINUX_DISTRO OUTPUT_STRIP_TRAILING_WHITESPACE)
+execute_process(COMMAND uname -m OUTPUT_VARIABLE MACHINE_ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+# determine CPack generators
+set(CPACK_GENERATOR "TGZ")
+
+if(LINUX_DISTRO STREQUAL "Debian" OR LINUX_DISTRO STREQUAL "Ubuntu" OR LINUX_DISTRO STREQUAL "LinuxMint")
+    set(CPACK_GENERATOR "DEB;TGZ")
 endif()
 
-# inform about package naming issues for cmake<3.6
-if(CMAKE_VERSION VERSION_LESS 3.6)
-	message(WARNING "DEB Generator: CMake/CPack 3.6 or higher is needed to produce correctly named packages.")
-endif()
-
-# set packaging dir
+# general CPack config
 set(CPACK_PACKAGE_DIRECTORY ${CMAKE_BINARY_DIR}/packages)
-message(STATUS "DEB Generator: debian packages will be generated under ${CPACK_PACKAGE_DIRECTORY}")
-
-# force CPack generated DEBs to use the same path as CMAKE_INSTALL_PREFIX
-#set(CPACK_SET_DESTDIR true)
-
-# manually set system arch if dpkg is not found or cmake version<3.6
-if(NOT DPKG_CMD OR CMAKE_VERSION VERSION_LESS 3.6)
-	if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL x86_64)
-		set(CPACK_SYSTEM_NAME amd64)
-	else()
-		set(CPACK_SYSTEM_NAME i386)
-	endif()
-endif()
-
-set(CPACK_DEBIAN_PACKAGE_NAME "lib${PROJECT_NAME}")
-set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT) # if cmake<3.6 this is not respected
-set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "STACKFORCE callback observer")
-set(CPACK_PACKAGE_VENDOR "STACKFORCE GmbH")
+message(STATUS "CPack: packages will be generated under ${CPACK_PACKAGE_DIRECTORY}")
+set(CPACK_PACKAGE_NAME "lib${PROJECT_NAME}")
+set(CPACK_PACKAGE_VERSION ${${PROJECT_NAME}_VERSION})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${${PROJECT_NAME}_PRODUCT_COMPANY} ${${PROJECT_NAME}_PRODUCT_NAME}")
+set(CPACK_PACKAGE_VENDOR "${${PROJECT_NAME}_PRODUCT_COMPANY} GmbH")
 set(CPACK_PACKAGE_CONTACT "info@stackforce.de")
-set(CPACK_DEBIAN_PACKAGE_VERSION ${${PROJECT_NAME}_VERSION})
-set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
-set(CPACK_STRIP_FILES TRUE)
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${PACKAGE_RELEASE_VERSION}-Linux-${MACHINE_ARCH})
+set(CPACK_STRIP_FILES ON)
 
-# TODO handle license and readme
-#set(CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_SOURCE_DIR}/README.rst")
-#set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE-MIT")
+# debian specific CPack config
+set(CPACK_DEBIAN_PACKAGE_RELEASE ${PACKAGE_RELEASE_VERSION})
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/stackforce")
+set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
 
 include(CPack)
