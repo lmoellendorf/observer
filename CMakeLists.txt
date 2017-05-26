@@ -13,7 +13,7 @@
 ## @brief      Generic implementation of the Oberserver pattern.
 ##
 
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.6)
 project(observer)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
