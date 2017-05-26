@@ -14,7 +14,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.6)
-project(observer)
+project(sfobserver)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
@@ -33,7 +33,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fme
 
 
 #---------------------------------------------------------------------------------------
-# libobserver sources and headers
+# libsfobserver sources and headers
 #---------------------------------------------------------------------------------------
 set(${PROJECT_NAME}_SOURCES
     ${PROJECT_SOURCE_DIR}/sf_subject.cpp
@@ -47,32 +47,32 @@ set(${PROJECT_NAME}_HEADERS
 )
 
 #---------------------------------------------------------------------------------------
-# libobserver target
+# libsfobserver target
 #---------------------------------------------------------------------------------------
 # intemediate object to avoid compiling sources twice for shared and static lib
-add_library(observer_o OBJECT ${${PROJECT_NAME}_SOURCES})
-set_target_properties(observer_o PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+add_library(sfobserver_o OBJECT ${${PROJECT_NAME}_SOURCES})
+set_target_properties(sfobserver_o PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
 # add static and shared libs targets
-add_library(observer SHARED $<TARGET_OBJECTS:observer_o>)
-add_library(observer-static STATIC $<TARGET_OBJECTS:observer_o>)
+add_library(sfobserver SHARED $<TARGET_OBJECTS:sfobserver_o>)
+add_library(sfobserver-static STATIC $<TARGET_OBJECTS:sfobserver_o>)
 
 # ensure produced static and shared libs have the same name
-set_target_properties(observer PROPERTIES OUTPUT_NAME observer)
-set_target_properties(observer-static PROPERTIES OUTPUT_NAME observer)
+set_target_properties(sfobserver PROPERTIES OUTPUT_NAME sfobserver)
+set_target_properties(sfobserver-static PROPERTIES OUTPUT_NAME sfobserver)
 
-set_target_properties(observer PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
-set_target_properties(observer-static PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
+set_target_properties(sfobserver PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
+set_target_properties(sfobserver-static PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
 
 #---------------------------------------------------------------------------------------
-# libobserver includes
+# libsfobserver includes
 #---------------------------------------------------------------------------------------
-target_include_directories(observer INTERFACE
+target_include_directories(sfobserver INTERFACE
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
 )
 
-target_include_directories(observer-static INTERFACE
+target_include_directories(sfobserver-static INTERFACE
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
 		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
 )
@@ -84,7 +84,7 @@ set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 set(PROJECT_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
 set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 
-install(TARGETS observer observer-static
+install(TARGETS sfobserver sfobserver-static
 		EXPORT ${TARGETS_EXPORT_NAME}
 		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
