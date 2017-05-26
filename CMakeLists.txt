@@ -21,13 +21,13 @@ include(CMakePackageConfigHelpers)
 #---------------------------------------------------------------------------------------
 # OBSERVER VERSION
 #---------------------------------------------------------------------------------------
-SET(${PROJECT_NAME}_VERSION_MAJOR                  1               CACHE STRING "mayor version")
-SET(${PROJECT_NAME}_VERSION_MINOR                  0               CACHE STRING "minor version")
-SET(${PROJECT_NAME}_VERSION_PATCH                  0               CACHE STRING "patch version")
-SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE           "alpha"         CACHE STRING "version type")
-SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE_VERSION   4               CACHE STRING "version type version")
-SET(${PROJECT_NAME}_PRODUCT_COMPANY                "STACKFORCE"    CACHE STRING "company name")
-SET(${PROJECT_NAME}_PRODUCT_NAME                   "OBSERVER"          CACHE STRING "product name")
+SET(${PROJECT_NAME}_VERSION_MAJOR                  2                CACHE STRING "mayor version")
+SET(${PROJECT_NAME}_VERSION_MINOR                  0                CACHE STRING "minor version")
+SET(${PROJECT_NAME}_VERSION_PATCH                  0                CACHE STRING "patch version")
+SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE           "rc"             CACHE STRING "version type")
+SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE_VERSION   1                CACHE STRING "version type version")
+SET(${PROJECT_NAME}_PRODUCT_COMPANY                "STACKFORCE"     CACHE STRING "company name")
+SET(${PROJECT_NAME}_PRODUCT_NAME                   "OBSERVER"       CACHE STRING "product name")
 SET(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fmessage-length=0")
 
