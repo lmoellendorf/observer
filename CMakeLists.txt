@@ -23,8 +23,6 @@ include(CMakePackageConfigHelpers)
 #---------------------------------------------------------------------------------------
 SET(${PROJECT_NAME}_PRODUCT_COMPANY                "STACKFORCE"         CACHE STRING "company name")
 SET(${PROJECT_NAME}_PRODUCT_NAME                   "Callback Observer"  CACHE STRING "product name")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fmessage-length=0")
-
 
 #---------------------------------------------------------------------------------------
 # libsfobserver sources and headers
@@ -41,7 +39,10 @@ set(${PROJECT_NAME}_HEADERS
 )
 
 #---------------------------------------------------------------------------------------
-# libsfobserver target
+# Compiler options
+#---------------------------------------------------------------------------------------
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fmessage-length=0")
+
 #---------------------------------------------------------------------------------------
 # intemediate object to avoid compiling sources twice for shared and static lib
 add_library(sfobserver_o OBJECT ${${PROJECT_NAME}_SOURCES})
