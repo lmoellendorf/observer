@@ -15,11 +15,15 @@
 
 cmake_minimum_required(VERSION 3.6)
 project(sfobserver VERSION 2.0.0)
+
+#---------------------------------------------------------------------------------------
+# Include required modules
+#---------------------------------------------------------------------------------------
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 #---------------------------------------------------------------------------------------
-# OBSERVER VERSION
+# Product extra info
 #---------------------------------------------------------------------------------------
 SET(${PROJECT_NAME}_PRODUCT_COMPANY                "STACKFORCE"         CACHE STRING "company name")
 SET(${PROJECT_NAME}_PRODUCT_NAME                   "Callback Observer"  CACHE STRING "product name")
@@ -44,6 +48,8 @@ set(${PROJECT_NAME}_HEADERS
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fmessage-length=0")
 
 #---------------------------------------------------------------------------------------
+# Targets sfobserver*
+#---------------------------------------------------------------------------------------
 # intemediate object to avoid compiling sources twice for shared and static lib
 add_library(sfobserver_o OBJECT ${${PROJECT_NAME}_SOURCES})
 set_target_properties(sfobserver_o PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
@@ -60,7 +66,7 @@ set_target_properties(sfobserver PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
 set_target_properties(sfobserver-static PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
 
 #---------------------------------------------------------------------------------------
-# libsfobserver includes
+# Include directories for sfobserver* targets
 #---------------------------------------------------------------------------------------
 target_include_directories(sfobserver INTERFACE
 		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
@@ -73,7 +79,7 @@ target_include_directories(sfobserver-static INTERFACE
 )
 
 #---------------------------------------------------------------------------------------
-# install/export targets
+# Install/export targets
 #---------------------------------------------------------------------------------------
 set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
 set(PROJECT_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
