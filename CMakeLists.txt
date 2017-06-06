@@ -9,161 +9,43 @@
 ##
 ## @file
 ## @copyright  STACKFORCE GmbH, Heitersheim, Germany, http://www.stackforce.de
-## @author     STACKFORCE
+## @author     Lars Moellendorf
+## @author     Adrian Antonana
 ## @brief      Generic implementation of the Oberserver pattern.
 ##
+## This file is part of the STACKFORCE Oberserver pattern library
+## (below "libsfobserver").
+##
+## libsfobserver is free software: you can redistribute it and/or modify
+## it under the terms of the GNU Affero General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+##
+## libsfobserver is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU Affero General Public License for more details.
+##
+## You should have received a copy of the GNU Affero General Public License
+## along with libsfobserver.  If not, see <http://www.gnu.org/licenses/>.
+##
 
-cmake_minimum_required(VERSION 3.2)
-project(observer)
+cmake_minimum_required(VERSION 3.6)
+project(sfobserver VERSION 2.0.0)
+
+#---------------------------------------------------------------------------------------
+# Include required modules
+#---------------------------------------------------------------------------------------
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 #---------------------------------------------------------------------------------------
-# OBSERVER VERSION
+# Product info
 #---------------------------------------------------------------------------------------
-SET(${PROJECT_NAME}_VERSION_MAJOR                  1               CACHE STRING "mayor version")
-SET(${PROJECT_NAME}_VERSION_MINOR                  0               CACHE STRING "minor version")
-SET(${PROJECT_NAME}_VERSION_PATCH                  0               CACHE STRING "patch version")
-SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE           "alpha"         CACHE STRING "version type")
-SET(${PROJECT_NAME}_VERSION_RELEASE_TYPE_VERSION   4               CACHE STRING "version type version")
-SET(${PROJECT_NAME}_PRODUCT_COMPANY                "STACKFORCE"    CACHE STRING "company name")
-SET(${PROJECT_NAME}_PRODUCT_NAME                   "OBSERVER"          CACHE STRING "product name")
-SET(${PROJECT_NAME}_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -fmessage-length=0")
-
+set(PROJECT_PRODUCT_COMPANY	"STACKFORCE"		CACHE STRING "company name")
+set(PROJECT_PRODUCT_NAME	"Callback Observer"	CACHE STRING "product name")
 
 #---------------------------------------------------------------------------------------
-# libobserver sources and headers
+# Add subdirectories
 #---------------------------------------------------------------------------------------
-set(${PROJECT_NAME}_SOURCES
-    ${PROJECT_SOURCE_DIR}/sf_subject.cpp
-    ${PROJECT_SOURCE_DIR}/sf_event.cpp
-)
-
-set(${PROJECT_NAME}_HEADERS
-	${PROJECT_SOURCE_DIR}/sf_observer.h
-	${PROJECT_SOURCE_DIR}/sf_subject.h
-	${PROJECT_SOURCE_DIR}/sf_event.h
-)
-
-#---------------------------------------------------------------------------------------
-# libobserver target
-#---------------------------------------------------------------------------------------
-# intemediate object to avoid compiling sources twice for shared and static lib
-add_library(observer_o OBJECT ${${PROJECT_NAME}_SOURCES})
-set_target_properties(observer_o PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
-
-# add static and shared libs targets
-add_library(observer SHARED $<TARGET_OBJECTS:observer_o>)
-add_library(observer-static STATIC $<TARGET_OBJECTS:observer_o>)
-
-# ensure produced static and shared libs have the same name
-set_target_properties(observer PROPERTIES OUTPUT_NAME observer)
-set_target_properties(observer-static PROPERTIES OUTPUT_NAME observer)
-
-set_target_properties(observer PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
-set_target_properties(observer-static PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
-
-#---------------------------------------------------------------------------------------
-# libobserver includes
-#---------------------------------------------------------------------------------------
-target_include_directories(observer INTERFACE
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
-		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-)
-
-target_include_directories(observer-static INTERFACE
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
-		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-)
-
-#---------------------------------------------------------------------------------------
-# install/export targets
-#---------------------------------------------------------------------------------------
-set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
-set(PROJECT_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake")
-set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
-
-install(TARGETS observer observer-static
-		EXPORT ${TARGETS_EXPORT_NAME}
-		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-write_basic_package_version_file(
-	${PROJECT_VERSION_FILE}
-	VERSION ${${PROJECT_NAME}_VERSION}
-	COMPATIBILITY AnyNewerVersion
-)
-
-install(FILES ${${PROJECT_NAME}_HEADERS}
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sfobserver
-)
-
-install(FILES ${PROJECT_VERSION_FILE}
-		DESTINATION ${CONFIG_INSTALL_DIR}
-)
-
-# build directory package config
-export(EXPORT ${TARGETS_EXPORT_NAME}
-		FILE ${PROJECT_NAME}-config.cmake
-)
-
-# installed package config
-install(EXPORT ${PROJECT_NAME}Targets
-		DESTINATION ${CONFIG_INSTALL_DIR}
-		FILE ${PROJECT_NAME}-config.cmake
-)
-
-# add to CMake registry
-export(PACKAGE ${PROJECT_NAME})
-
-#---------------------------------------------------------------------------------------
-# CREATE DEB PACKAGE
-#---------------------------------------------------------------------------------------
-set(CPACK_GENERATOR "DEB")
-
-# check if command dpkg is available
-find_program(DPKG_CMD dpkg)
-if(DPKG_CMD)
-	message(STATUS "DEB Generator: Found dpkg: ${DPKG_CMD}")
-else()
-	message(WARNING "DEB Generator: dpkg not found")
-endif()
-
-# inform about package naming issues for cmake<3.6
-if(CMAKE_VERSION VERSION_LESS 3.6)
-	message(WARNING "DEB Generator: CMake/CPack 3.6 or higher is needed to produce correctly named packages.")
-endif()
-
-# set packaging dir
-set(CPACK_PACKAGE_DIRECTORY ${CMAKE_BINARY_DIR}/packages)
-message(STATUS "DEB Generator: debian packages will be generated under ${CPACK_PACKAGE_DIRECTORY}")
-
-# force CPack generated DEBs to use the same path as CMAKE_INSTALL_PREFIX
-#set(CPACK_SET_DESTDIR true)
-
-# manually set system arch if dpkg is not found or cmake version<3.6
-if(NOT DPKG_CMD OR CMAKE_VERSION VERSION_LESS 3.6)
-	if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL x86_64)
-		set(CPACK_SYSTEM_NAME amd64)
-	else()
-		set(CPACK_SYSTEM_NAME i386)
-	endif()
-endif()
-
-set(CPACK_DEBIAN_PACKAGE_NAME "libsfobserver")
-set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT) # if cmake<3.6 this is not respected
-set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "STACKFORCE callback observer")
-set(CPACK_PACKAGE_VENDOR "STACKFORCE GmbH")
-set(CPACK_PACKAGE_CONTACT "info@stackforce.de")
-set(CPACK_DEBIAN_PACKAGE_VERSION ${${PROJECT_NAME}_VERSION})
-set(CPACK_DEBIAN_PACKAGE_SECTION "Development")
-set(CPACK_STRIP_FILES TRUE)
-
-# TODO handle license and readme
-#set(CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_SOURCE_DIR}/README.rst")
-#set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE-MIT")
-
-include(CPack)
+add_subdirectory(src)

@@ -84,8 +84,7 @@ public:
     // it is interested in
     static void Attach ( Observer *observer );
     static void Detach ( Observer *observer );
-//     static void Notify ( Event *event, Filter filter );
-    static void Notify ( Event *event);
+    static void Notify ( Event *event, Filter filter );
 };
 
 }
