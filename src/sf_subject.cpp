@@ -38,15 +38,9 @@ Subject::~Subject()
 
     }
 
-void Subject::Notify ( Event *event, Filter filter )
-{
-  for ( auto it = observers.begin(); it != observers.end(); ++it )
+    Subject::~Subject()
     {
-      if ( filter ( ( Observer* ) *it, event ) )
-        {
-          ( ( Observer* ) *it )->Update ( event );
-        }
+
     }
-}
 
 }
