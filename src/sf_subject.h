@@ -78,8 +78,6 @@ public:
 
             virtual void Attach ( Observer *observer ) = 0;
             virtual void Detach ( Observer *observer ) = 0;
-    //TODO: overload Attach() to enable the Oberserver to pass a Event "id"
-    // it is interested in
             static void Notify ( Observer *observer, Event *event);
         };
 
