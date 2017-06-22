@@ -14,7 +14,6 @@
  *
  */
 
-#include <forward_list>
 
 #include "sf_observer.h"
 #include "sf_subject.h"
@@ -23,7 +22,6 @@
 namespace sf
 {
 
-std::forward_list<Observer*> Subject::observers;
 
 Subject::Subject()
 {

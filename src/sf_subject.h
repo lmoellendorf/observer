@@ -62,7 +62,6 @@
  * This is a generic C++ implementation of this pattern.
  */
 
-#include <forward_list>
 
 namespace sf
 {
@@ -73,8 +72,6 @@ class Event;
 class Subject
 {
 
-protected:
-    static std::forward_list<Observer*> observers;
 public:
     Subject();
     ~Subject();
