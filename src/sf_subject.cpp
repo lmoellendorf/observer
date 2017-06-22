@@ -43,4 +43,7 @@ Subject::~Subject()
 
     }
 
+    void Subject::Notify (  Observer *observer, Event *event) {
+        observer->Update ( event );
+    }
 }
