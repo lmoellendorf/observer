@@ -33,15 +33,10 @@ Subject::~Subject()
 
 }
 
-void Subject::Attach ( Observer *observer )
-{
-  Subject::observers.push_front ( observer );
-}
+    Subject::Subject()
+    {
 
-void Subject::Detach ( Observer *observer )
-{
-  Subject::observers.remove ( observer );
-}
+    }
 
 void Subject::Notify ( Event *event, Filter filter )
 {
