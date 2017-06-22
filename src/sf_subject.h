@@ -62,19 +62,16 @@
  * This is a generic C++ implementation of this pattern.
  */
 
-
-namespace sf
-{
+namespace sf {
 
 class Observer;
 class Event;
 
-class Subject
-{
+    class Subject {
 
-public:
-    Subject();
-    ~Subject();
+        public:
+            Subject();
+            ~Subject();
 
             virtual void Attach ( Observer *observer ) = 0;
             virtual void Detach ( Observer *observer ) = 0;

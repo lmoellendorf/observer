@@ -14,24 +14,11 @@
  *
  */
 
-
 #include "sf_observer.h"
 #include "sf_subject.h"
 #include "sf_event.h"
 
-namespace sf
-{
-
-
-Subject::Subject()
-{
-
-}
-
-Subject::~Subject()
-{
-
-}
+namespace sf {
 
     Subject::Subject()
     {
