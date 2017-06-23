@@ -1,5 +1,5 @@
-#ifndef EVENT_H
-#define EVENT_H
+#ifndef _SF_EVENT_H_
+#define _SF_EVENT_H_
 
 /**
  * @code
@@ -42,4 +42,4 @@ private:
 
 }
 
-#endif // EVENT_H
+#endif // _SF_EVENT_H_

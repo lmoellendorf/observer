@@ -1,5 +1,5 @@
-#ifndef OBSERVER_H
-#define OBSERVER_H
+#ifndef _SF_OBSERVER_H_
+#define _SF_OBSERVER_H_
 
 /**
  * @code
@@ -32,4 +32,5 @@ public:
 };
 
 }
-#endif // OBSERVER_H
+
+#endif // _SF_OBSERVER_H_

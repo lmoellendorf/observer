@@ -1,5 +1,5 @@
-#ifndef SUBJECT_H
-#define SUBJECT_H
+#ifndef _SF_SUBJECT_H_
+#define _SF_SUBJECT_H_
 
 /**
  * @code
@@ -37,4 +37,4 @@ class Event;
         };
 
 }
-#endif // SUBJECT_H
+#endif // _SF_SUBJECT_H_
