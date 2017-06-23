@@ -39,9 +39,9 @@ set(${PROJECT_NAME}_SOURCES
 )
 
 set(${PROJECT_NAME}_HEADERS
-	${CMAKE_CURRENT_SOURCE_DIR}/sf_observer.h
-	${CMAKE_CURRENT_SOURCE_DIR}/sf_subject.h
-	${CMAKE_CURRENT_SOURCE_DIR}/sf_event.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/sf_observer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/sf_subject.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/sf_event.h
 )
 
 #---------------------------------------------------------------------------------------
@@ -71,13 +71,13 @@ set_target_properties(sfobserver-static PROPERTIES VERSION ${PROJECT_VERSION})
 # Include directories for sfobserver* targets
 #---------------------------------------------------------------------------------------
 target_include_directories(sfobserver INTERFACE
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
 target_include_directories(sfobserver-static INTERFACE
-		$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/sfobserver>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
 #---------------------------------------------------------------------------------------
@@ -88,34 +88,34 @@ set(PROJECT_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-ver
 set(TARGETS_EXPORT_NAME "${PROJECT_NAME}Targets")
 
 install(TARGETS sfobserver sfobserver-static
-		EXPORT ${TARGETS_EXPORT_NAME}
-		LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-		ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        EXPORT ${TARGETS_EXPORT_NAME}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 write_basic_package_version_file(
-	${PROJECT_VERSION_FILE}
-	VERSION ${PROJECT_VERSION}
-	COMPATIBILITY SameMajorVersion
+    ${PROJECT_VERSION_FILE}
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
 )
 
 install(FILES ${${PROJECT_NAME}_HEADERS}
-		DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sfobserver
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sfobserver
 )
 
 install(FILES ${PROJECT_VERSION_FILE}
-		DESTINATION ${CONFIG_INSTALL_DIR}
+        DESTINATION ${CONFIG_INSTALL_DIR}
 )
 
 # build directory package config
 export(EXPORT ${TARGETS_EXPORT_NAME}
-		FILE ${PROJECT_NAME}-config.cmake
+        FILE ${PROJECT_NAME}-config.cmake
 )
 
 # installed package config
 install(EXPORT ${PROJECT_NAME}Targets
-		DESTINATION ${CONFIG_INSTALL_DIR}
-		FILE ${PROJECT_NAME}-config.cmake
+        DESTINATION ${CONFIG_INSTALL_DIR}
+        FILE ${PROJECT_NAME}-config.cmake
 )
 
 # add to CMake registry
