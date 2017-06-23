@@ -22,23 +22,21 @@
 
 #include <string>
 
-namespace sf
-{
+namespace sf {
 
-class Event
-{
-public:
-    Event ( int identifier, void *content, size_t content_size );
-    ~Event();
+    class Event {
+        public:
+            Event ( int identifier, void *content, size_t content_size );
+            ~Event();
 
-    virtual int GetIdentifier ( );
-    virtual size_t GetDetails ( void **content );
+            virtual int GetIdentifier ( );
+            virtual size_t GetDetails ( void **content );
 
-private:
-    int identifier;
-    void *content;
-    size_t content_size;
-};
+        private:
+            int identifier;
+            void *content;
+            size_t content_size;
+        };
 
 }
 

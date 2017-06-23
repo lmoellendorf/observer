@@ -22,14 +22,12 @@
 
 #include "sf_event.h"
 
-namespace sf
-{
+namespace sf {
 
-class Observer
-{
-public:
-    virtual void Update ( Event *event ) = 0;
-};
+    class Observer {
+        public:
+            virtual void Update ( Event *event ) = 0;
+    };
 
 }
 

@@ -22,8 +22,8 @@
 
 namespace sf {
 
-class Observer;
-class Event;
+    class Observer;
+    class Event;
 
     class Subject {
 
