@@ -1,68 +1,63 @@
-# README                                                             {#mainpage}
-    @code
-
+# README
+```
      ___ _____ _   ___ _  _____ ___  ___  ___ ___
     / __|_   _/_\ / __| |/ / __/ _ \| _ \/ __| __|
     \__ \ | |/ _ \ (__| ' <| _| (_) |   / (__| _|
     |___/ |_/_/ \_\___|_|\_\_| \___/|_|_\\___|___|
     embedded.connectivity.solutions.==============
+```
 
-    @endcode
+# Introduction
 
-# Introduction                                                   {#introduction}
-
-## Purpose                                                            {#purpose}
+## Purpose
 
 The STACKFORCE Observer abstracts the use of the observer/subject pattern.
 
-## Features                                                           {#feature}
+## Features
 
-The Observer provides base classes to be implemented by concrete
-observers and subjects.
+The Observer is an interface class inherited by concrete observers/subjects.
 
-Baically a concrete subject has to implement the Attach and Detach methods and
+Basically a concrete subject has to implement the Attach and Detach methods and
 store registered observers e.g. in an observers vector.
-The observer class has to implement the Update method which is used by the
-subject to pass events to the oberver.
 
-@code
+A concrete observer class has to implement the Update method which is used by the
+subject to pass events to the oberver. The observer is responsible of handling the
+received events when its update method is called.
+
+```
                                     +----------------------------------------------+
- +--------------------------+       |                                              |
- |                          |       |  Subject                                     |
- |  Observer                +-----<>|                                              |
- |                          |       +----------------------------------------------+
+ +--------------------------+       |  Subject                                     |
+ |  Observer                |       +----------------------------------------------+
  +--------------------------+       |                                              |
  |                          |       +----------------------------------------------+
  +--------------------------+       |                                              |
- |                          |       | +Attach ( Observer *observer )               |
- | +Update ( Event *event ) |       | +Detach ( Observer *observer )               |
- |                          |       | +Notify ( Observer *observer, Event *event ) |
- +--------------------------+       |                                              |
+ | +Update ( Event *event ) |       | +Attach ( Observer *observer )               |
+ +--------------------------+       | +Detach ( Observer *observer )               |
+                                    | +Notify ( Observer *observer, Event *event ) |
              /_\                    +----------------------------------------------+
               |                                           /_\
               |                                            |
               |                                            |
               |                                            |
  +------------+-------------+             +----------------+---------------+
- |                          |             |                                |
- |  ConcreteObserverA       |             | ConcreteSubject                |
- |                          |             |                                |
+ |  ConcreteObserver        +-----------<>| ConcreteSubject                |
  +--------------------------+             +--------------------------------+
- |                          |             |                                |
- +--------------------------+             | +ObserverCollection            |
- |                          |             |                                |
- | +Update ( Event *event ) |             +--------------------------------+
- |                          |             |                                |
- +--------------------------+             | +Attach ( Observer *observer ) |
-                                          | +Detach ( Observer *observer ) |
-                                          |                                |
+ |                          |             | -ObserverCollection            |
+ +--------------------------+             +--------------------------------+
+ | +Update ( Event *event ) |             | +Attach ( Observer *observer ) |
+ +--------------------------+             | +Detach ( Observer *observer ) |
                                           +--------------------------------+
-@endcode
+```
 
-## Build instructions                                                   {#build}
+## Build instructions
 
-The STACKFORCE Observer uses CMake as build system. How to build:
-Go to root, create build directory:
+The STACKFORCE Observer uses CMake as build system.
+Note that, once built, the library can be used by other cmake projects with the
+`find_package()` command without requiring to install the library on the system.
+Therefore running a `make install` is not mandatory to be able to build other
+projects that link to the observer library.
+
+Go to the project directory and create a build directory:
 
     cd observer
     mkdir build
@@ -79,14 +74,11 @@ or to define a custom install directory e.g. devroot:
     make
     make install
 
-To generate the doxygen documentation run:
-
-    make doc
-
 To generate packages run:
 
 	make package
 
-	This will generyte by default a tar.gz archive, and installer shell script
-	and if run under Ubuntu, Debian or LinuxMint, a debian package that can be installed
-	with "dpkg".
+This will generate a tar.gz archive, and installer shell script by default.
+If run under Ubuntu, Debian or LinuxMint, a debian package will be generated.
+
+    dpkg -i package_name.deb
