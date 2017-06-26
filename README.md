@@ -33,8 +33,8 @@ received events when its update method is called.
  +--------------------------+       |                                              |
  | +Update ( Event *event ) |       | +Attach ( Observer *observer )               |
  +--------------------------+       | +Detach ( Observer *observer )               |
-                                    | +Notify ( Observer *observer, Event *event ) |
-             /_\                    +----------------------------------------------+
+             /_\                    | +Notify ( Observer *observer, Event *event ) |
+              |                     +----------------------------------------------+
               |                                           /_\
               |                                            |
               |                                            |
