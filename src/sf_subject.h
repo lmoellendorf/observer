@@ -31,8 +31,6 @@ namespace sf {
             Subject();
             ~Subject();
 
-            virtual void Attach ( Observer *observer ) = 0;
-            virtual void Detach ( Observer *observer ) = 0;
             static void Notify ( Observer *observer, Event *event);
         };
 

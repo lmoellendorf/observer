@@ -31,7 +31,7 @@
 ##
 
 cmake_minimum_required(VERSION 3.6)
-project(sfobserver VERSION 2.0.0)
+project(sfobserver VERSION 3.0.0)
 
 #---------------------------------------------------------------------------------------
 # Include required modules
@@ -42,8 +42,8 @@ include(CMakePackageConfigHelpers)
 #---------------------------------------------------------------------------------------
 # Product info
 #---------------------------------------------------------------------------------------
-set(PROJECT_PRODUCT_COMPANY	"STACKFORCE"		CACHE STRING "company name")
-set(PROJECT_PRODUCT_NAME	"Callback Observer"	CACHE STRING "product name")
+set(PROJECT_PRODUCT_COMPANY "STACKFORCE"        CACHE STRING "company name")
+set(PROJECT_PRODUCT_NAME    "Callback Observer" CACHE STRING "product name")
 
 #---------------------------------------------------------------------------------------
 # Add subdirectories
